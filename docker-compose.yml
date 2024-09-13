@@ -1,6 +1,5 @@
 version: '3'
 services:
-
   book-catalog:
     image: book-catalog
     build: 
@@ -13,6 +12,7 @@ services:
       - PORT=8081
       - DATABASE_URL=postgresql://siri:W8xp1hgbyOCc4HZe7nrzkJ5MYSPSj0Hr@dpg-crhvjsjtq21c738477ag-a.oregon-postgres.render.com/week3db
     restart: "no"
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8081
 
   inventory-management:
     image: inventory-management
@@ -21,8 +21,9 @@ services:
       dockerfile: Dockerfile
     container_name: inventory-management
     ports:
-     - "8082:8082"
+      - "8082:8082"
     environment:
       - PORT=8082
       - DATABASE_URL=postgresql://siri:W8xp1hgbyOCc4HZe7nrzkJ5MYSPSj0Hr@dpg-crhvjsjtq21c738477ag-a.oregon-postgres.render.com/week3db
     restart: "no"
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8082
