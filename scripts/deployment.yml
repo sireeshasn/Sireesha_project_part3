@@ -21,6 +21,8 @@ spec:
           value: "8081"
         - name: DATABASE_URL
           value: "postgresql://siri:W8xp1hgbyOCc4HZe7nrzkJ5MYSPSj0Hr@dpg-crhvjsjtq21c738477ag-a.oregon-postgres.render.com/week3db"
+        ports:
+        - containerPort: 8081
 ---
 apiVersion: v1
 kind: Service
@@ -32,8 +34,8 @@ spec:
   type: LoadBalancer
   ports:
     - protocol: TCP
-      port: 8088
-      targetPort: 8081
+      port: 8081     # External access port (same as the app port)
+      targetPort: 8081 # Target port on the container
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -53,13 +55,13 @@ spec:
       - name: inventory-management
         image: sireeshasn/inventory-management:latest
         imagePullPolicy: Always
-        ports:
-        - containerPort: 8082
         env:
         - name: PORT
           value: "8082"
         - name: DATABASE_URL
           value: "postgresql://siri:W8xp1hgbyOCc4HZe7nrzkJ5MYSPSj0Hr@dpg-crhvjsjtq21c738477ag-a.oregon-postgres.render.com/week3db"
+        ports:
+        - containerPort: 8082
 ---
 apiVersion: v1
 kind: Service
@@ -71,5 +73,5 @@ spec:
   type: LoadBalancer
   ports:
     - protocol: TCP
-      port: 8089
-      targetPort: 8082
+      port: 8082     # External access port (same as the app port)
+      targetPort: 8082 # Target port on the container
